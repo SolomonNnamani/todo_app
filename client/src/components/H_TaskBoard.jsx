@@ -17,7 +17,7 @@ const H_TaskBoard = (props) => {
   //for getting/fetching listed tasks
   useEffect(() => {
    
-    fetchWithAuth("https://todo-app-nyc1.onrender.com/api/tasks",{
+    fetchWithAuth("/api/tasks",{
       method: "GET",
       
     })

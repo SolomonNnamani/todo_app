@@ -17,8 +17,19 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3001;
 
+const allowedOrigins = [
+  process.env.FRONTEND_DEV,
+  process.env.FRONTEND_PROD
+];
+
 app.use(cors({
-  origin: "https://tasksflow01.netlify.app", // allow your frontend domain
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 

@@ -1,5 +1,6 @@
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 let sessionExpired = false; // flag to prevent multiple alerts
-export const fetchWithAuth = async (url, options = {}) => {
+export const fetchWithAuth = async (path, options = {}) => {
   const token = localStorage.getItem("token");
   const headers = {
     ...options.headers,
@@ -7,7 +8,7 @@ export const fetchWithAuth = async (url, options = {}) => {
     "Content-Type": "application/json",
   };
   try {
-    const response = await fetch(url, { ...options, headers });
+    const response = await fetch(`${baseUrl}${path}`, { ...options, headers });
 
     //Handle unauthorized or expired token
     if ((response.status === 401 || response.status === 403) && !sessionExpired) {

@@ -71,5 +71,9 @@ ul > li:hover {
 .forParagaph{
     width:80%
 }
+.errorParagraph{
+    margin: 0 0 -10% 0;
+    text-align: center;
+}
 
 

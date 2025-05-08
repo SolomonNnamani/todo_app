@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiFetch } from "../utils/apiFetch";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const register = () => {
   const [formData, setFormData] = useState({
@@ -16,10 +18,10 @@ const register = () => {
     password: "",
     confirmPassword: "",
   });
-  const [showPassword, setShowPassword] = useState(false)
-  const [confirmPassword, setConfirmPassword] = useState(false)
-  const  [isSubmitting, setIsSubmitting] =  useState(false)
-  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,11 +35,11 @@ const register = () => {
       lastName: "",
       email: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
     };
-  
+
     let isValid = true;
-  
+
     if (firstName.trim() === "") {
       errors.firstName = "First name is required";
       isValid = false;
@@ -45,7 +47,7 @@ const register = () => {
       errors.firstName = "First name must be 2-30 letters only";
       isValid = false;
     }
-  
+
     if (lastName.trim() === "") {
       errors.lastName = "Last name is required";
       isValid = false;
@@ -53,23 +55,30 @@ const register = () => {
       errors.lastName = "Last name must be 2-30 letters only";
       isValid = false;
     }
-  
+
     if (email.trim() === "") {
       errors.email = "Email is required";
       isValid = false;
-    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.trim())) {
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.trim())
+    ) {
       errors.email = "Please enter a valid email address";
       isValid = false;
     }
-  
+
     if (password === "") {
       errors.password = "Password is required";
       isValid = false;
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d@$!%*?&.,#^+=_-]{8,}$/.test(password)) {
-      errors.password = "Password must be at least 8 characters and contain uppercase, number and special character";
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d@$!%*?&.,#^+=_-]{8,}$/.test(
+        password
+      )
+    ) {
+      errors.password =
+        "Password must be at least 8 characters and contain uppercase, number and special character";
       isValid = false;
     }
-  
+
     if (confirmPassword === "") {
       errors.confirmPassword = "Please confirm your password";
       isValid = false;
@@ -77,63 +86,54 @@ const register = () => {
       errors.confirmPassword = "Passwords do not match";
       isValid = false;
     }
-  
+
     setError(errors);
     return isValid;
   };
-  
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const isValid = validateForm()
+    const isValid = validateForm();
 
-    if(!isValid) return ;
+    if (!isValid) return;
 
     // Destructure to exclude confirmPassword
-    const {confirmPassword, ...dataToSend} = formData
-    setIsSubmitting(true)
+    const { confirmPassword, ...dataToSend } = formData;
+    setIsSubmitting(true);
 
-    try{
-      const response = await fetch("https://todo-app-nyc1.onrender.com/api/register", {
+    try {
+      const response = await apiFetch("/api/register", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(dataToSend)
-      })
-    
-      const data = await response.json()
+        body: JSON.stringify(dataToSend),
+      });
+
+      const data = await response.json();
       if (!response.ok) {
-        if(data.exist){
-          alert(`${data.exist}`)
+        if (data.exist) {
+          alert(`${data.exist}`);
         }
         throw new Error(data.error || "Registration failed");
       }
       //console.log("Registration sucessful: ", data)
-      if(data.user){
-        alert('Registration successful')
-         setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      })
-      navigate("/login");
-
+      if (data.user) {
+        alert("Registration successful");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+        navigate("/login");
       }
-
-      
-     
-
-
-    }catch(error){
-      console.log("Registration failed:", error.message)
-    
-    }finally {
-      setIsSubmitting(false)
+    } catch (error) {
+      console.log("Registration failed:", error.message);
+    } finally {
+      setIsSubmitting(false);
     }
-
   };
 
   return (
@@ -146,7 +146,7 @@ const register = () => {
 
       {/*register form*/}
       <div className=" px-4 py-10 md:w-1/2 m-auto">
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit}>
           {/**First Name */}
           <label htmlFor="fname" className="font-semibold">
             First Name
@@ -154,26 +154,36 @@ const register = () => {
           <br />
           <input
             type="text"
+            id="fname"
             placeholder="e.g Solomon"
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
           />
-         {error.firstName && <p className=" text-red-500 px-1 font-bold text-sm">{error.firstName} </p>}
+          {error.firstName && (
+            <p className=" text-red-500 px-1 font-bold text-sm errorParagraph">
+              {error.firstName}{" "}
+            </p>
+          )}
           <br />
           {/**Last Name*/}
-          <label htmlFor="lname" className="font-semibold">
+          <label htmlFor="lname" className="font-semibold p-0 m-0">
             Last Name
           </label>
           <br />
           <input
             type="text"
+            id="lname"
             placeholder="e.g Shelby"
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
           />
-         {error.lastName && <p className=" text-red-500 px-1 font-bold text-sm">{error.lastName} </p>}
+          {error.lastName && (
+            <p className=" text-red-500 px-1 font-bold text-sm errorParagraph">
+              {error.lastName}{" "}
+            </p>
+          )}
           <br />
           {/**Email */}
           <label htmlFor="regEmail" className="font-semibold">
@@ -182,57 +192,76 @@ const register = () => {
           <br />
           <input
             type="email"
+            id="regEmail"
             placeholder=" abc@example.com"
             name="email"
             value={formData.email}
             onChange={handleChange}
           />
-       {error.email && <p className=" text-red-500 px-1 font-bold text-sm">{error.email} </p>}
+          {error.email && (
+            <p className=" text-red-500 px-1 font-bold text-sm errorParagraph">
+              {error.email}{" "}
+            </p>
+          )}
           <br />
 
           {/**Password */}
           <div className="relative">
-          <label htmlFor="regPassword" className="font-semibold">
-            Password
-          </label>
-          <br />
-          
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="*********"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-           
-          />
-          <span 
-           className="absolute right-5 top-12 cursor-pointer text-gray-600"
-          onClick={() => setShowPassword((prev) => !prev)}> {showPassword ? "🙈" : "👁️"}</span>
-          {error.password && <p className=" text-red-500 px-1 font-bold text-sm">{error.password} </p>}
+            <label htmlFor="regPassword" className="font-semibold">
+              Password
+            </label>
+            <br />
 
+            <input
+              type={showPassword ? "text" : "password"}
+              id="regPassword"
+              placeholder="*********"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <span
+              className="absolute right-5 top-13 cursor-pointer text-gray-600"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FiEye /> : <FiEyeOff />}
+            </span>
+            {error.password && (
+              <p className=" text-red-500 px-1 font-bold text-sm text-center -mb-4">
+                {error.password}
+              </p>
+            )}
           </div>
-        
+
           <br />
 
           {/**Confirm Password */}
-          <div className="relative">
-<label htmlFor="confirmPassword" className="font-semibold">
-            Confirm Password
-          </label>
-          <br />
-          <input
-            type={confirmPassword ? "text" : "password"}
-            placeholder="*********"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-          <span 
-           className="absolute right-5 top-12 cursor-pointer text-gray-600"
-          onClick={() => setConfirmPassword((prev) => !prev)}> {confirmPassword ? "🙈" : "👁️"}</span>
-         {error.confirmPassword && <p className=" text-red-500 px-1 font-bold text-sm">{error.confirmPassword} </p>}
+          <div className="relative -mt-3">
+            <label htmlFor="confirmPassword" className="font-semibold ">
+              Confirm Password
+            </label>
+            <br />
+            <input
+              type={confirmPassword ? "text" : "password"}
+              id="confirmPassword"
+              placeholder="*********"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            <span
+              className="absolute right-5 top-13 cursor-pointer text-gray-600"
+              onClick={() => setConfirmPassword((prev) => !prev)}
+            >
+              {" "}
+              {confirmPassword ? <FiEye /> : <FiEyeOff />}
+            </span>
+            {error.confirmPassword && (
+              <p className=" text-red-500 px-1 font-bold text-sm text-center">
+                {error.confirmPassword}{" "}
+              </p>
+            )}
           </div>
-          
 
           {/*Submit button */}
           <button
@@ -240,7 +269,7 @@ const register = () => {
             className="w-full my-7 text-black bg-lime-400 p-3
           rounded-xl cursor-pointer"
           >
-            {isSubmitting ? "Registering...": "Create Account"}
+            {isSubmitting ? "Registering..." : "Create Account"}
           </button>
         </form>
 

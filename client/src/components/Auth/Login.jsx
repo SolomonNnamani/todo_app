@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiFetch } from "../utils/apiFetch";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -67,7 +69,7 @@ const Login = () => {
     const { ...dataToSend } = formData;
     setIsSubmitting(true);
     try {
-      const response = await fetch("https://todo-app-nyc1.onrender.com/api/login", {
+      const response = await apiFetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,25 +77,24 @@ const Login = () => {
         body: JSON.stringify(dataToSend),
       });
       if (!response.ok) {
-        alert('Invalid Username and password!')
+        alert("Invalid Username and password!");
       }
 
       const data = await response.json();
       console.log("Login successful", data);
-      if(data.token){
-        localStorage.setItem('token', data.token); //store User Token in frontend
-        console.log("Logged in!")
-        navigate("/");
+      if (data.token) {
+        localStorage.setItem("token", data.token); //store User Token in frontend
+        console.log("Logged in!");
+        navigate("/dashboard");
       }
       setFormData({
         email: "",
         password: "",
       });
       //Homepage
-      
     } catch (error) {
       console.log("Login failed", error.message);
-      alert('Login failed, please try again')
+      alert("Login failed, please try again");
     } finally {
       setIsSubmitting(false);
     }
@@ -124,7 +125,7 @@ const Login = () => {
             onChange={handleChange}
           />
           {error.email && (
-            <p className=" text-red-500 px-1 font-bold text-sm">
+            <p className=" text-red-500 px-1 font-bold text-sm !text-left errorParagraph">
               {error.email}
             </p>
           )}
@@ -149,10 +150,10 @@ const Login = () => {
               className="absolute right-5 top-13 cursor-pointer "
             >
               {" "}
-              {showPassword ? "🙈" : "👁️"}
+              {showPassword ? <FiEye /> : <FiEyeOff />}
             </span>
             {error.password && (
-              <p className=" text-red-500 px-1 font-bold text-sm">
+              <p className=" text-red-500 px-1 font-bold text-sm  -mb-3 ">
                 {error.password}
               </p>
             )}
@@ -167,9 +168,7 @@ const Login = () => {
             {isSubmitting ? "Authenticating..." : "Log in"}
           </button>
         </form>
-        <button 
-        
-        className="forgot w-full mb-7 p-2 font-light underline  cursor-pointer  ">
+        <button className="forgot w-full mb-7 p-2 font-light underline  cursor-pointer  ">
           <a href="/forgotPassword">Forgot Password?</a>
         </button>
 

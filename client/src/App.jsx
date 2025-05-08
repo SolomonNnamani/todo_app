@@ -4,7 +4,8 @@ import Register from "./components/Auth/Register";
 import ForgotPassword from "./components/Auth/forgotPassword"
 import ResetPassword from "./components/Auth/resetPassword"
 import MainApp from "./components/C_MainApp";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import NotFound from './components/L_NotFound'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/forgotPassword" element={<ForgotPassword/>}/>
         <Route path="/reset-password/:token" element={<ResetPassword/>}/>
-        <Route path="/" element={ <MainApp />}/>
-       {/* <Route path="*" element={ <NotFound />}/> */}
+        <Route path="/dashboard" element={ <MainApp />}/>
+        <Route path="/" element={<Login />} />
+        <Route path="*" element={ <NotFound />}/> 
          
        
       </Routes>

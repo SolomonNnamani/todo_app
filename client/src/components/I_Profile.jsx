@@ -11,7 +11,7 @@ const I_Profile = () => {
   })
    useEffect(() => {
      
-      fetchWithAuth("https://todo-app-nyc1.onrender.com/api/profile",{
+      fetchWithAuth("/api/profile",{
         method: "GET",
       })
         .then((res) => res.json())

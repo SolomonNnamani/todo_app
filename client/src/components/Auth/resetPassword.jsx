@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {useParams} from 'react-router-dom';
+import {apiFetch} from '../utils/apiFetch'
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 
 const resetPassword = () => {
@@ -79,7 +81,7 @@ const resetPassword = () => {
     
     setLoading(true);
     try {
-      const response = await fetch("https://todo-app-nyc1.onrender.com/api/reset-password", {
+      const response = await apiFetch("/api/reset-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +139,7 @@ const resetPassword = () => {
                 onClick={() => setShowPassword((prev) => !prev)}
               >
                 {" "}
-                {showPassword ? "🙈" : "👁️"}
+                {showPassword ?<FiEye/> : <FiEyeOff/> }
               </span>
               {error.password && 
                 <p className="text-red-500 text-sm">{error.password}</p>
@@ -161,7 +163,7 @@ const resetPassword = () => {
                 onClick={() => setConfirmPassword((prev) => !prev)}
               >
                 {" "}
-                {confirmPassword ? "🙈" : "👁️"}
+                {confirmPassword ?<FiEye/> : <FiEyeOff/> }
               </span>
               {error.confirmPassword && (
                 <p className="text-red-500 text-sm">{error.confirmPassword}</p>
