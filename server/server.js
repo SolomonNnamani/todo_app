@@ -15,10 +15,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3001;
 
 app.use(cors({
-  origin: "https://tasksflow01.netlify.app/", // allow your frontend domain
+  origin: "https://tasksflow01.netlify.app", // allow your frontend domain
   credentials: true
 }));
 
