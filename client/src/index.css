@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+
+label{
+    display:block;
+    margin:10px 0px -15px 0px;
+}
+
+ input {
+    border:2px solid black;
+    padding:15px;
+    width:100%;
+    border-radius:10px;
+    border-color: rgb(198, 189, 189);
+    outline:none;
+}
+input::placeholder{
+    color: #888;
+  font-style: italic;
+  font-size: 14px;
+}
+input[type="password"]::-ms-reveal,
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none;
+}
+.forgot{
+    border: 2px inset black
+}
+.mainInput{
+    width:85%
+}
+.submitBtn{
+width:10%;
+padding: 1px 2px 10px 2px;
+border-radius:10px;
+font-size:30px;
+font-weight: bold;
+}
+
+.btnContainer{
+    width: 100%;
+   
+}
+.btnContainer >button {
+    background-color: ghostwhite;
+    padding:5px 20px ;
+    margin:10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+}
+.btnContainer >button.active {
+    background-color: #92e661;
+}
+
+.btnContainer >button:focus{
+    outline:none
+}
+ul > li {
+    transition: all 0.3s ease
+}
+ul > li:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-top: -5px;
+}
+.noTasksContainer{
+    margin-top: -6.61pc;
+    position: absolute;
+}
+
+.forParagaph{
+    width:80%
+}
+
+
