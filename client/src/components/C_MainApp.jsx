@@ -26,7 +26,7 @@ const MainApp = () => {
       const addTask = async () => {
         
         try {
-          const response = await fetchWithAuth("http://localhost:3001/api/tasks", {
+          const response = await fetchWithAuth("https://todo-app-nyc1.onrender.com/api/tasks", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

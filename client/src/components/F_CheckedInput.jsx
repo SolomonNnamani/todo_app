@@ -22,7 +22,7 @@ const CheckedInput = (props) => {
   
       try {
         const response = await fetchWithAuth(
-          `http://localhost:3001/api/tasks/${updatedTask._id}`,
+          `https://todo-app-nyc1.onrender.com/api/tasks/${updatedTask._id}`,
           {
             method: "PUT",
             headers: {

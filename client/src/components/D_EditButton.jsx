@@ -35,7 +35,7 @@ const EditButton = ({ task, taskList, setTaskList, visible }) => {
         });
 
         const response = await fetchWithAuth(
-          `http://localhost:3001/api/edit/${editedTask._id}`,
+          `https://todo-app-nyc1.onrender.com/api/edit/${editedTask._id}`,
           {
             method: "PUT",
             headers: {

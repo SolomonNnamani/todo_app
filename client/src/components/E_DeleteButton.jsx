@@ -9,7 +9,7 @@ const DeleteButton = (props) => {
     
     try {
       const response = await fetchWithAuth(
-        `http://localhost:3001/api/delete/${task._id}`,
+        `https://todo-app-nyc1.onrender.com/api/delete/${task._id}`,
         {
           method: "DELETE",
           headers: {

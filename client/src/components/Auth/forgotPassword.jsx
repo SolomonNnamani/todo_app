@@ -16,7 +16,7 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:3001/api/forgot-password",
+        "https://todo-app-nyc1.onrender.com/api/forgot-password",
         {
           method: "POST",
           headers: {
