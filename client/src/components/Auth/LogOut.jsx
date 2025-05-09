@@ -13,7 +13,7 @@ const LogOut = () => {
     <div className=''>
         <button 
         className="border  border-lime-400 rounded p-1  cursor-pointer
-        absolute top-6 right-8"
+        absolute top-6 md:right-8 right-4"
         onClick={handleLogOut}
         >
             Log Out

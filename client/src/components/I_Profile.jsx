@@ -29,7 +29,7 @@ const I_Profile = () => {
           </p>
           <h2 className="px-4 font-bold ">
            {profile.firstName} {profile.lastName} <br />
-            <span className="text-xs font-normal">{profile.email}</span>{" "}
+            <span className="text-xs font-normal italic ">{profile.email}</span>{" "}
           </h2>
         </div>
       </div>

@@ -85,7 +85,7 @@ const MainApp = () => {
           />
           <button
             type="submit"
-            className="bg-black text-lime-400 cursor-pointer submitBtn ml-3 "
+            className="bg-black text-lime-400 cursor-pointer w-11 p-4 rounded-lg font-bold text-center ml-1   md:ml-3 md:submitBtn"
           >
             &#43;
           </button>
